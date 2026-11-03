@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Skrip Generator Pro</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-800 min-h-screen flex items-center justify-center p-3 sm:p-6 relative overflow-x-hidden">
+
+    <!-- Background Decorative Elements -->
+    <div class="fixed -top-40 -left-40 w-80 sm:w-96 h-80 sm:h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="fixed -bottom-40 -right-40 w-80 sm:w-96 h-80 sm:h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
+
+    <!-- Main Container Card -->
+    <div class="glass-card w-full max-w-xl rounded-2xl shadow-2xl border border-white/20 p-5 sm:p-8 relative z-10 my-auto">
+
+        <!-- Header -->
+        <div class="flex flex-row justify-between items-center gap-2 mb-6 pb-4 border-b border-slate-200">
+            <div class="flex items-center gap-2.5">
+                <div class="bg-gradient-to-tr from-blue-600 to-purple-600 text-white p-2 rounded-xl text-lg flex items-center justify-center w-10 h-10 shadow-md">
+                    ✨
+                </div>
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                        AI Skrip Generator
+                    </h1>
+                    <p class="text-[11px] sm:text-xs text-slate-500">Jana skrip jualan TikTok & Reels automatik.</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-1.5 bg-slate-100/80 p-1.5 rounded-xl border border-slate-200 shrink-0">
+                <span class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-lg shadow-sm flex items-center gap-1">
+                    🪙
+                    <span id="creditCount">…</span>
+                </span>
+                <button onclick="openTopupModal()" class="text-xs bg-emerald-500 hover:bg-emerald-600 text-white font-medium px-2 py-1 rounded-lg transition shadow-sm" title="Tambah Kredit">
+                    +
+                </button>
+            </div>
+        </div>
+
+        <!-- Form Inputs -->
+        <div class="space-y-4">
+            <div>
+                <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                    Nama Produk <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                        📦
+                    </span>
+                    <input type="text" id="productName" maxlength="100" placeholder="Contoh: Sambal Nyet Khairulaming" class="w-full pl-9 pr-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-sm bg-white">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                    Kelebihan / USP Produk <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                        ⭐
+                    </span>
+                    <input type="text" id="productBenefits" maxlength="200" placeholder="Contoh: Pedas manis, terus makan, mesra travel" class="w-full pl-9 pr-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-sm bg-white">
+                </div>
+            </div>
+
+            <!-- Customization Options -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                        Gaya/Nada Skrip
+                    </label>
+                    <select id="scriptTone" class="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none text-sm bg-white">
+                        <option value="Santai & Mesra (Casual)">Santai & Mesra (TikTok Style)</option>
+                        <option value="Dramatik & Penuh Emosi">Dramatik & Storytelling</option>
+                        <option value="Profesional & Elegan">Profesional & Elegan</option>
+                        <option value="Hard Sell / Promosi Terus">Hard Sell (Promosi Cepat)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                        Audien Sasaran
+                    </label>
+                    <input type="text" id="targetAudience" maxlength="100" placeholder="Contoh: Orang bujang, ibu bekerja" class="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none text-sm bg-white">
+                </div>
+            </div>
+
+            <button onclick="generateScript()" id="generateBtn" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 rounded-xl hover:opacity-95 transition shadow-lg shadow-blue-500/25 flex items-center justify-center gap-2 text-sm mt-2 active:scale-[0.99]">
+                ⚡
+                <span>Jana Skrip (Guna 1 Kredit)</span>
+            </button>
+        </div>
+
+        <!-- Output Section -->
+        <div class="mt-6">
+            <div class="flex justify-between items-center mb-2">
+                <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
+                    Hasil Skrip AI:
+                </label>
+                <button onclick="copyOutput()" id="copyBtn" class="hidden text-xs text-blue-600 hover:text-blue-800 font-medium flex items-center gap-1 transition bg-blue-50 hover:bg-blue-100 px-2.5 py-1 rounded-lg border border-blue-200">
+                    📋 Salin Skrip
+                </button>
+            </div>
+
+            <div id="output" class="p-4 bg-slate-50 border border-slate-200 rounded-xl min-h-[140px] text-sm text-slate-700 whitespace-pre-line relative leading-relaxed select-text">
+                <span class="text-slate-400 italic flex items-center justify-center h-full pt-8 text-center text-xs sm:text-sm">
+                    Skrip video anda yang direka khas akan keluar di sini selepas dijana...
+                </span>
+            </div>
+        </div>
+
+        <!-- History Toggle -->
+        <div class="mt-5 border-t border-slate-200 pt-3">
+            <button onclick="toggleHistory()" class="text-xs text-slate-500 hover:text-slate-700 font-medium flex items-center gap-1.5 transition">
+                🕘 <span id="historyToggleText">Tunjukkan Sejarah Skrip</span>
+            </button>
+            <div id="historyList" class="hidden mt-2.5 space-y-2 max-h-40 overflow-y-auto pr-1">
+                <!-- Dynamic history items -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Custom Notification Modal -->
+    <div id="modalOverlay" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 text-center shadow-2xl border border-slate-100 transform transition-all scale-95 opacity-0 duration-200" id="modalBox">
+            <div id="modalIcon" class="w-12 h-12 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mx-auto mb-4 text-xl">
+                ⚠️
+            </div>
+            <h3 id="modalTitle" class="text-lg font-bold text-slate-800 mb-1">Makluman</h3>
+            <p id="modalMessage" class="text-sm text-slate-600 mb-6 leading-relaxed">Mesej makluman di sini.</p>
+            <button onclick="closeModal()" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl font-medium text-sm transition">
+                Tutup
+            </button>
+        </div>
+    </div>
+
+    <!-- Top-up Modal -->
+    <div id="topupOverlay" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm items-center justify-center p-4 z-50" style="display:none">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-start mb-1">
+                <h3 class="text-lg font-bold text-slate-800">Tambah Kredit 🪙</h3>
+                <button onclick="closeTopupModal()" class="text-slate-400 hover:text-slate-600 text-xl leading-none px-1" aria-label="Tutup">✕</button>
+            </div>
+            <p class="text-xs text-slate-500 mb-3">Baki sekarang: <b id="topupBalance" class="text-slate-700">…</b> kredit. 1 kredit = 1 skrip.</p>
+
+            <div id="packageList" class="space-y-2 mb-4"></div>
+
+            <div class="border-t border-slate-200 pt-3">
+                <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                    Dah bayar? Masukkan kod anda
+                </label>
+                <div class="flex gap-2">
+                    <input type="text" id="codeInput" placeholder="SKRIP-XXXX-XXXX" autocapitalize="characters" autocomplete="off" class="flex-1 min-w-0 p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none text-sm bg-white uppercase">
+                    <button onclick="redeemCode()" id="redeemBtn" class="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold text-sm transition shrink-0">
+                        Guna Kod
+                    </button>
+                </div>
+                <p id="codeMsg" class="text-xs mt-2 text-slate-500 hidden"></p>
+                <p class="text-[11px] text-slate-400 mt-2">Simpan kod anda. Ia boleh digunakan di mana-mana telefon.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-slate-800 text-white px-4 py-3 rounded-xl text-sm shadow-xl flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 z-50 border border-slate-700">
+        ✅
+        <span id="toastMsg">Teks berjaya disalin!</span>
+    </div>
+
+    <script>
+        /* ===== TETAPAN (ubah di sini sahaja) ===== */
+        const API_BASE = "https://skrip-proxy.twinsalwa81.workers.dev";
+        const WA_NUMBER = "601131236469";
+        // payUrl: letak pautan bayaran (cth Toyyibpay) jika ada. Kosong = tempahan melalui WhatsApp.
+        const PACKAGES = [
+            { name: 'Asas',    credits: 30,  price: 5,  payUrl: '', tag: '' },
+            { name: 'Popular', credits: 100, price: 10, payUrl: '', tag: 'Paling laris' },
+            { name: 'Peniaga', credits: 300, price: 25, payUrl: '', tag: 'Paling jimat' }
+        ];
+        /* ========================================= */
+
+        const PLACEHOLDER_HTML = document.getElementById('output').innerHTML;
+
+        function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+        function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+        function lsDel(k) { try { localStorage.removeItem(k); } catch (e) {} }
+
+        function escapeHtml(t) {
+            return String(t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+        }
+
+        function getDeviceId() {
+            let id = lsGet('skrip_device');
+            if (!id) {
+                id = (window.crypto && crypto.randomUUID)
+                    ? crypto.randomUUID()
+                    : 'd' + Date.now().toString(36) + Math.random().toString(36).slice(2, 12);
+                lsSet('skrip_device', id);
+            }
+            return id;
+        }
+
+        const deviceId = getDeviceId();
+        let accessCode = lsGet('skrip_code') || '';
+        let credits = null;
+        let scriptHistory = [];
+
+        async function callApi(path, payload) {
+            const res = await fetch(API_BASE + path, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            let data = {};
+            try { data = await res.json(); } catch (e) {}
+            return { status: res.status, data: data };
+        }
+
+        function renderCredits() {
+            const txt = credits === null ? '…' : String(credits);
+            document.getElementById('creditCount').innerText = txt;
+            document.getElementById('topupBalance').innerText = txt;
+        }
+
+        async function refreshBalance() {
+            try {
+                let r = await callApi('/balance', { deviceId: deviceId, code: accessCode });
+                if (r.data.error === 'INVALID_CODE') {
+                    accessCode = '';
+                    lsDel('skrip_code');
+                    r = await callApi('/balance', { deviceId: deviceId });
+                }
+                if (typeof r.data.credits === 'number') credits = r.data.credits;
+            } catch (e) {}
+            renderCredits();
+        }
+
+        async function generateScript() {
+            const name = document.getElementById('productName').value.trim();
+            const benefit = document.getElementById('productBenefits').value.trim();
+            const tone = document.getElementById('scriptTone').value;
+            const audience = document.getElementById('targetAudience').value.trim() || 'Umum';
+            const output = document.getElementById('output');
+            const generateBtn = document.getElementById('generateBtn');
+
+            if (!name || !benefit) {
+                showModal('Maklumat Tidak Lengkap', 'Sila isi Nama Produk dan Kelebihan Produk terlebih dahulu!');
+                return;
+            }
+
+            if (credits !== null && credits <= 0) {
+                openTopupModal();
+                return;
+            }
+
+            generateBtn.disabled = true;
+            generateBtn.innerHTML = `<span class="animate-spin inline-block">⏳</span> <span>Menjana Skrip AI...</span>`;
+            output.innerHTML = `
+                <div class="flex flex-col items-center justify-center py-6 text-slate-400">
+                    <span class="animate-pulse text-3xl mb-2">✨</span>
+                    <span class="text-xs sm:text-sm">AI sedang mereka skrip paling viral untuk anda...</span>
+                </div>
+            `;
+
+            try {
+                const r = await callApi('/generate', {
+                    deviceId: deviceId,
+                    code: accessCode,
+                    name: name,
+                    benefit: benefit,
+                    tone: tone,
+                    audience: audience
+                });
+
+                if (r.status === 402 || r.data.error === 'NO_CREDITS') {
+                    credits = 0;
+                    renderCredits();
+                    output.innerHTML = PLACEHOLDER_HTML;
+                    openTopupModal();
+                    return;
+                }
+
+                if (r.data.error === 'INVALID_CODE') {
+                    accessCode = '';
+                    lsDel('skrip_code');
+                    output.innerHTML = PLACEHOLDER_HTML;
+                    await refreshBalance();
+                    showToast('Kod tidak sah. Sila masukkan semula.');
+                    return;
+                }
+
+                if (r.data.text) {
+                    const cleanText = String(r.data.text)
+                        .replace(/\*\*|\*|#{1,6}\s?|^---+$/gm, '')
+                        .trim();
+                    credits = typeof r.data.credits === 'number' ? r.data.credits : credits;
+                    renderCredits();
+                    output.innerText = cleanText;
+                    document.getElementById('copyBtn').classList.remove('hidden');
+                    saveToHistory(name, cleanText);
+                } else {
+                    throw new Error(r.data.message || 'Gagal menerima respons.');
+                }
+            } catch (error) {
+                console.error(error);
+                output.innerHTML = PLACEHOLDER_HTML;
+                showModal('Ada Masalah', 'Skrip gagal dijana. Kredit anda tidak ditolak. Sila cuba lagi sebentar lagi.');
+            } finally {
+                generateBtn.disabled = false;
+                generateBtn.innerHTML = `⚡ <span>Jana Skrip (Guna 1 Kredit)</span>`;
+            }
+        }
+
+        function copyOutput() {
+            const outputText = document.getElementById('output').innerText;
+            if (!outputText || outputText.includes("Skrip video anda")) return;
+
+            const textarea = document.createElement('textarea');
+            textarea.value = outputText;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            showToast("Skrip berjaya disalin!");
+        }
+
+        function saveToHistory(productName, scriptText) {
+            scriptHistory.unshift({
+                name: productName,
+                script: scriptText,
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            });
+            renderHistory();
+        }
+
+        function renderHistory() {
+            const historyList = document.getElementById('historyList');
+            historyList.innerHTML = '';
+
+            scriptHistory.forEach((item, index) => {
+                const el = document.createElement('div');
+                el.className = 'p-2.5 bg-slate-100 rounded-xl text-xs hover:bg-slate-200 cursor-pointer transition flex justify-between items-center border border-slate-200';
+                el.innerHTML = `
+                    <div class="truncate mr-2">
+                        <span class="font-bold text-slate-800">${escapeHtml(item.name)}</span>
+                        <span class="text-slate-400 text-[10px] ml-1">(${item.time})</span>
+                    </div>
+                    <button onclick="loadHistoryItem(${index})" class="text-blue-600 font-semibold hover:underline shrink-0">
+                        Lihat
+                    </button>
+                `;
+                historyList.appendChild(el);
+            });
+        }
+
+        function loadHistoryItem(index) {
+            const item = scriptHistory[index];
+            if (item) {
+                document.getElementById('output').innerText = item.script;
+                document.getElementById('copyBtn').classList.remove('hidden');
+                showToast("Skrip dimuatkan daripada sejarah!");
+            }
+        }
+
+        function toggleHistory() {
+            const list = document.getElementById('historyList');
+            const text = document.getElementById('historyToggleText');
+            if (list.classList.contains('hidden')) {
+                list.classList.remove('hidden');
+                text.innerText = 'Sembunyikan Sejarah Skrip';
+            } else {
+                list.classList.add('hidden');
+                text.innerText = 'Tunjukkan Sejarah Skrip';
+            }
+        }
+
+        /* ===== Modal makluman ===== */
+        function showModal(title, message) {
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalBox = document.getElementById('modalBox');
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalMessage').innerText = message;
+
+            modalOverlay.classList.remove('hidden');
+            setTimeout(() => {
+                modalBox.classList.remove('scale-95', 'opacity-0');
+                modalBox.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalBox = document.getElementById('modalBox');
+            modalBox.classList.remove('scale-100', 'opacity-100');
+            modalBox.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => { modalOverlay.classList.add('hidden'); }, 200);
+        }
+
+        /* ===== Modal tambah kredit ===== */
+        function renderPackages() {
+            const list = document.getElementById('packageList');
+            list.innerHTML = '';
+            PACKAGES.forEach((p, i) => {
+                const per = (p.price / p.credits).toFixed(2);
+                const btn = document.createElement('button');
+                btn.className = 'w-full text-left p-3 border border-slate-200 hover:border-blue-400 hover:bg-blue-50 rounded-xl transition flex justify-between items-center gap-2';
+                btn.onclick = function () { buyPackage(i); };
+                btn.innerHTML = `
+                    <div>
+                        <div class="text-sm font-bold text-slate-800">${escapeHtml(p.name)} ${p.tag ? '<span class="ml-1 text-[10px] bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-md font-semibold">' + escapeHtml(p.tag) + '</span>' : ''}</div>
+                        <div class="text-xs text-slate-500">${p.credits} skrip &middot; RM${per}/skrip</div>
+                    </div>
+                    <div class="text-base font-bold text-blue-600 shrink-0">RM${p.price}</div>
+                `;
+                list.appendChild(btn);
+            });
+        }
+
+        function openTopupModal() {
+            renderPackages();
+            renderCredits();
+            document.getElementById('codeMsg').classList.add('hidden');
+            document.getElementById('topupOverlay').style.display = 'flex';
+        }
+
+        function closeTopupModal() {
+            document.getElementById('topupOverlay').style.display = 'none';
+        }
+
+        function buyPackage(i) {
+            const p = PACKAGES[i];
+            if (p.payUrl) {
+                window.open(p.payUrl, '_blank');
+                showToast('Selepas bayar, WhatsApp resit untuk dapatkan kod.');
+                return;
+            }
+            const text = `Hai, saya nak beli pakej ${p.name} (${p.credits} skrip) RM${p.price} untuk AI Skrip Generator.`;
+            window.open('https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(text), '_blank');
+        }
+
+        async function redeemCode() {
+            const input = document.getElementById('codeInput');
+            const msg = document.getElementById('codeMsg');
+            const btn = document.getElementById('redeemBtn');
+            const code = input.value.trim().toUpperCase();
+
+            msg.classList.remove('hidden', 'text-red-600', 'text-emerald-600', 'text-slate-500');
+
+            if (!code) {
+                msg.classList.add('text-red-600');
+                msg.innerText = 'Sila masukkan kod anda.';
+                return;
+            }
+
+            btn.disabled = true;
+            msg.classList.add('text-slate-500');
+            msg.innerText = 'Menyemak kod...';
+
+            try {
+                const r = await callApi('/balance', { deviceId: deviceId, code: code });
+                msg.classList.remove('text-slate-500');
+                if (r.data.error === 'INVALID_CODE') {
+                    msg.classList.add('text-red-600');
+                    msg.innerText = 'Kod tidak sah. Semak semula ejaan kod anda.';
+                } else if (typeof r.data.credits === 'number') {
+                    accessCode = code;
+                    lsSet('skrip_code', code);
+                    credits = r.data.credits;
+                    renderCredits();
+                    input.value = '';
+                    msg.classList.add('text-emerald-600');
+                    msg.innerText = 'Kod diterima! Baki anda: ' + credits + ' kredit.';
+                    showToast('Kod diterima! Baki: ' + credits + ' kredit');
+                    setTimeout(closeTopupModal, 1200);
+                } else {
+                    msg.classList.add('text-red-600');
+                    msg.innerText = 'Tidak dapat menyemak kod. Cuba lagi.';
+                }
+            } catch (e) {
+                msg.classList.remove('text-slate-500');
+                msg.classList.add('text-red-600');
+                msg.innerText = 'Masalah sambungan. Cuba lagi.';
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        refreshBalance();
+    </script>
+</body>
+</html>
