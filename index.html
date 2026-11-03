@@ -242,7 +242,9 @@ Formatkan skrip kepada 3 bahagian penting:
 2. 📦 ISI / CERITA (Penerangan kelebihan & penyelesaian masalah)
 3. 👉 CALL TO ACTION (CTA) (Arahan pembelian, cth: tekan beg kuning / pautan di bio)
 
-Pastikan bahasa Melayu natural, menarik perhatian, dan sesuai untuk video viral.`;
+Pastikan bahasa Melayu natural, menarik perhatian, dan sesuai untuk video viral.
+
+PENTING: Jangan guna simbol Markdown (#, *, **, ---). Tulis teks biasa sahaja dengan emoji. Jangan tulis ayat pembuka seperti "Tentu!" atau ayat penutup. Terus mula dengan tajuk bahagian HOOK.`;
 
             try {
                 // Call Gemini API (gemini-3-flash-preview)
@@ -268,10 +270,14 @@ Pastikan bahasa Melayu natural, menarik perhatian, dan sesuai untuk video viral.
                     saveCredits();
                     document.getElementById('creditCount').innerText = credits;
 
-                    output.innerText = generatedText;
+                    const cleanText = generatedText
+                        .replace(/\*\*|\*|#{1,6}\s?|^---+$/gm, '')
+                        .replace(/^(Tentu|Baik|Okay|Ok)[^\n]*\n+/i, '')
+                        .trim();
+                    output.innerText = cleanText;
                     document.getElementById('copyBtn').classList.remove('hidden');
 
-                    saveToHistory(name, generatedText);
+                    saveToHistory(name, cleanText);
 
                     if (credits === 0) {
                         generateBtn.classList.remove('from-blue-600', 'to-purple-600', 'hover:opacity-95');
