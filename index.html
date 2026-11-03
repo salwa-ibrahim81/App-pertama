@@ -40,7 +40,7 @@
 
     <!-- Main Container Card -->
     <div class="glass-card w-full max-w-xl rounded-2xl shadow-2xl border border-white/20 p-5 sm:p-8 relative z-10 my-auto">
-        
+
         <!-- Header -->
         <div class="flex flex-row justify-between items-center gap-2 mb-6 pb-4 border-b border-slate-200">
             <div class="flex items-center gap-2.5">
@@ -54,13 +54,13 @@
                     <p class="text-[11px] sm:text-xs text-slate-500">Jana skrip jualan TikTok & Reels automatik.</p>
                 </div>
             </div>
-            
+
             <div class="flex items-center gap-1.5 bg-slate-100/80 p-1.5 rounded-xl border border-slate-200 shrink-0">
                 <span class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-lg shadow-sm flex items-center gap-1">
                     🪙
-                    <span id="creditCount">5</span>/5
+                    <span id="creditCount">…</span>
                 </span>
-                <button onclick="openTopupModal()" class="text-xs bg-emerald-500 hover:bg-emerald-600 text-white font-medium px-2 py-1 rounded-lg transition shadow-sm" title="Top Up Kredit">
+                <button onclick="openTopupModal()" class="text-xs bg-emerald-500 hover:bg-emerald-600 text-white font-medium px-2 py-1 rounded-lg transition shadow-sm" title="Tambah Kredit">
                     +
                 </button>
             </div>
@@ -76,7 +76,7 @@
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
                         📦
                     </span>
-                    <input type="text" id="productName" placeholder="Contoh: Sambal Nyet Khairulaming" class="w-full pl-9 pr-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-sm bg-white">
+                    <input type="text" id="productName" maxlength="100" placeholder="Contoh: Sambal Nyet Khairulaming" class="w-full pl-9 pr-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-sm bg-white">
                 </div>
             </div>
 
@@ -88,7 +88,7 @@
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
                         ⭐
                     </span>
-                    <input type="text" id="productBenefits" placeholder="Contoh: Pedas manis, terus makan, mesra travel" class="w-full pl-9 pr-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-sm bg-white">
+                    <input type="text" id="productBenefits" maxlength="200" placeholder="Contoh: Pedas manis, terus makan, mesra travel" class="w-full pl-9 pr-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-sm bg-white">
                 </div>
             </div>
 
@@ -109,7 +109,7 @@
                     <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
                         Audien Sasaran
                     </label>
-                    <input type="text" id="targetAudience" placeholder="Contoh: Orang bujang, ibu bekerja" class="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none text-sm bg-white">
+                    <input type="text" id="targetAudience" maxlength="100" placeholder="Contoh: Orang bujang, ibu bekerja" class="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none text-sm bg-white">
                 </div>
             </div>
 
@@ -129,7 +129,7 @@
                     📋 Salin Skrip
                 </button>
             </div>
-            
+
             <div id="output" class="p-4 bg-slate-50 border border-slate-200 rounded-xl min-h-[140px] text-sm text-slate-700 whitespace-pre-line relative leading-relaxed select-text">
                 <span class="text-slate-400 italic flex items-center justify-center h-full pt-8 text-center text-xs sm:text-sm">
                     Skrip video anda yang direka khas akan keluar di sini selepas dijana...
@@ -157,13 +157,35 @@
             </div>
             <h3 id="modalTitle" class="text-lg font-bold text-slate-800 mb-1">Makluman</h3>
             <p id="modalMessage" class="text-sm text-slate-600 mb-6 leading-relaxed">Mesej makluman di sini.</p>
-            <div class="flex gap-2 justify-center">
-                <button onclick="closeModal()" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl font-medium text-sm transition">
-                    Tutup
-                </button>
-                <button id="modalActionBtn" onclick="modalAction()" class="hidden px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-medium text-sm transition flex items-center gap-1.5 shadow-md shadow-emerald-600/20">
-                    💬 WhatsApp
-                </button>
+            <button onclick="closeModal()" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl font-medium text-sm transition">
+                Tutup
+            </button>
+        </div>
+    </div>
+
+    <!-- Top-up Modal -->
+    <div id="topupOverlay" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm items-center justify-center p-4 z-50" style="display:none">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-start mb-1">
+                <h3 class="text-lg font-bold text-slate-800">Tambah Kredit 🪙</h3>
+                <button onclick="closeTopupModal()" class="text-slate-400 hover:text-slate-600 text-xl leading-none px-1" aria-label="Tutup">✕</button>
+            </div>
+            <p class="text-xs text-slate-500 mb-3">Baki sekarang: <b id="topupBalance" class="text-slate-700">…</b> kredit. 1 kredit = 1 skrip.</p>
+
+            <div id="packageList" class="space-y-2 mb-4"></div>
+
+            <div class="border-t border-slate-200 pt-3">
+                <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                    Dah bayar? Masukkan kod anda
+                </label>
+                <div class="flex gap-2">
+                    <input type="text" id="codeInput" placeholder="SKRIP-XXXX-XXXX" autocapitalize="characters" autocomplete="off" class="flex-1 min-w-0 p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none text-sm bg-white uppercase">
+                    <button onclick="redeemCode()" id="redeemBtn" class="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold text-sm transition shrink-0">
+                        Guna Kod
+                    </button>
+                </div>
+                <p id="codeMsg" class="text-xs mt-2 text-slate-500 hidden"></p>
+                <p class="text-[11px] text-slate-400 mt-2">Simpan kod anda. Ia boleh digunakan di mana-mana telefon.</p>
             </div>
         </div>
     </div>
@@ -175,25 +197,73 @@
     </div>
 
     <script>
-        const MAX_CREDITS = 5;
-        function loadCredits() {
-            try {
-                const v = localStorage.getItem('skrip_credits');
-                if (v !== null && !isNaN(+v)) return Math.max(0, Math.min(MAX_CREDITS, +v));
-            } catch (e) {}
-            return MAX_CREDITS;
-        }
-        function saveCredits() {
-            try { localStorage.setItem('skrip_credits', String(credits)); } catch (e) {}
-        }
+        /* ===== TETAPAN (ubah di sini sahaja) ===== */
+        const API_BASE = "https://skrip-proxy.twinsalwa81.workers.dev";
+        const WA_NUMBER = "601131236469";
+        // payUrl: letak pautan bayaran (cth Toyyibpay) jika ada. Kosong = tempahan melalui WhatsApp.
+        const PACKAGES = [
+            { name: 'Asas',    credits: 30,  price: 5,  payUrl: '', tag: '' },
+            { name: 'Popular', credits: 100, price: 10, payUrl: '', tag: 'Paling laris' },
+            { name: 'Peniaga', credits: 300, price: 25, payUrl: '', tag: 'Paling jimat' }
+        ];
+        /* ========================================= */
+
+        const PLACEHOLDER_HTML = document.getElementById('output').innerHTML;
+
+        function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+        function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+        function lsDel(k) { try { localStorage.removeItem(k); } catch (e) {} }
+
         function escapeHtml(t) {
             return String(t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
         }
-        let credits = loadCredits();
-        document.getElementById('creditCount').innerText = credits;
+
+        function getDeviceId() {
+            let id = lsGet('skrip_device');
+            if (!id) {
+                id = (window.crypto && crypto.randomUUID)
+                    ? crypto.randomUUID()
+                    : 'd' + Date.now().toString(36) + Math.random().toString(36).slice(2, 12);
+                lsSet('skrip_device', id);
+            }
+            return id;
+        }
+
+        const deviceId = getDeviceId();
+        let accessCode = lsGet('skrip_code') || '';
+        let credits = null;
         let scriptHistory = [];
 
-        // Generate Script using Gemini AI API
+        async function callApi(path, payload) {
+            const res = await fetch(API_BASE + path, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            let data = {};
+            try { data = await res.json(); } catch (e) {}
+            return { status: res.status, data: data };
+        }
+
+        function renderCredits() {
+            const txt = credits === null ? '…' : String(credits);
+            document.getElementById('creditCount').innerText = txt;
+            document.getElementById('topupBalance').innerText = txt;
+        }
+
+        async function refreshBalance() {
+            try {
+                let r = await callApi('/balance', { deviceId: deviceId, code: accessCode });
+                if (r.data.error === 'INVALID_CODE') {
+                    accessCode = '';
+                    lsDel('skrip_code');
+                    r = await callApi('/balance', { deviceId: deviceId });
+                }
+                if (typeof r.data.credits === 'number') credits = r.data.credits;
+            } catch (e) {}
+            renderCredits();
+        }
+
         async function generateScript() {
             const name = document.getElementById('productName').value.trim();
             const benefit = document.getElementById('productBenefits').value.trim();
@@ -202,23 +272,16 @@
             const output = document.getElementById('output');
             const generateBtn = document.getElementById('generateBtn');
 
-            // Validation
-            if (credits <= 0) {
-                showModal(
-                    'Kredit Habis!', 
-                    'Kredit anda telah habis (0/5). Sila hubungi kami melalui WhatsApp untuk menambah kredit anda.', 
-                    'amber', 
-                    true
-                );
-                return;
-            }
-
             if (!name || !benefit) {
-                showModal('Maklumat Tidak Lengkap', 'Sila isi Nama Produk dan Kelebihan Produk terlebih dahulu!', 'amber');
+                showModal('Maklumat Tidak Lengkap', 'Sila isi Nama Produk dan Kelebihan Produk terlebih dahulu!');
                 return;
             }
 
-            // UI Loading state
+            if (credits !== null && credits <= 0) {
+                openTopupModal();
+                return;
+            }
+
             generateBtn.disabled = true;
             generateBtn.innerHTML = `<span class="animate-spin inline-block">⏳</span> <span>Menjana Skrip AI...</span>`;
             output.innerHTML = `
@@ -228,78 +291,49 @@
                 </div>
             `;
 
-            // Prepare prompt for Gemini LLM
-            const systemPrompt = `Anda ialah seorang Pakar Pemasaran Digital dan Video Creator TikTok/Shorts berbahasa Melayu yang berpengalaman tinggi. Tugas anda adalah menghasilkan skrip video promosi pendek yang berasaskan formula Hook-Story-Call To Action (CTA). Lengkapkan jawapan dengan emoji yang sesuai dan format yang kemas.`;
-            
-            const userPrompt = `Sila hasilkan 1 skrip video pendek (30-60 saat) untuk promosi produk berikut:
-- Nama Produk: ${name}
-- Kelebihan / USP Utama: ${benefit}
-- Nada / Style: ${tone}
-- Audien Sasaran: ${audience}
-
-Formatkan skrip kepada 3 bahagian penting:
-1. 🔥 HOOK (3 saat pertama untuk tarik perhatian)
-2. 📦 ISI / CERITA (Penerangan kelebihan & penyelesaian masalah)
-3. 👉 CALL TO ACTION (CTA) (Arahan pembelian, cth: tekan beg kuning / pautan di bio)
-
-Pastikan bahasa Melayu natural, menarik perhatian, dan sesuai untuk video viral.
-
-PENTING: Jangan guna simbol Markdown (#, *, **, ---). Tulis teks biasa sahaja dengan emoji. Jangan tulis ayat pembuka seperti "Tentu!" atau ayat penutup. Terus mula dengan tajuk bahagian HOOK.`;
-
             try {
-                // Call Gemini API (gemini-3-flash-preview)
-                // Selepas deploy Cloudflare Worker, tampal URL Worker anda di sini
-                const PROXY_URL = "https://skrip-proxy.twinsalwa81.workers.dev";
-                if (!PROXY_URL) throw new Error("DEMO_MODE");
-                const apiUrl = PROXY_URL;
-
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: userPrompt }] }],
-                        systemInstruction: { parts: [{ text: systemPrompt }] }
-                    })
+                const r = await callApi('/generate', {
+                    deviceId: deviceId,
+                    code: accessCode,
+                    name: name,
+                    benefit: benefit,
+                    tone: tone,
+                    audience: audience
                 });
 
-                const data = await response.json();
-                const generatedText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-
-                if (generatedText) {
-                    credits--;
-                    saveCredits();
-                    document.getElementById('creditCount').innerText = credits;
-
-                    const cleanText = generatedText
-                        .replace(/\*\*|\*|#{1,6}\s?|^---+$/gm, '')
-                        .replace(/^(Tentu|Baik|Okay|Ok)[^\n]*\n+/i, '')
-                        .trim();
-                    output.innerText = cleanText;
-                    document.getElementById('copyBtn').classList.remove('hidden');
-
-                    saveToHistory(name, cleanText);
-
-                    if (credits === 0) {
-                        generateBtn.classList.remove('from-blue-600', 'to-purple-600', 'hover:opacity-95');
-                        generateBtn.classList.add('bg-slate-400', 'cursor-not-allowed');
-                    }
-                } else {
-                    throw new Error("Gagal menerima respons daripada AI.");
+                if (r.status === 402 || r.data.error === 'NO_CREDITS') {
+                    credits = 0;
+                    renderCredits();
+                    output.innerHTML = PLACEHOLDER_HTML;
+                    openTopupModal();
+                    return;
                 }
 
+                if (r.data.error === 'INVALID_CODE') {
+                    accessCode = '';
+                    lsDel('skrip_code');
+                    output.innerHTML = PLACEHOLDER_HTML;
+                    await refreshBalance();
+                    showToast('Kod tidak sah. Sila masukkan semula.');
+                    return;
+                }
+
+                if (r.data.text) {
+                    const cleanText = String(r.data.text)
+                        .replace(/\*\*|\*|#{1,6}\s?|^---+$/gm, '')
+                        .trim();
+                    credits = typeof r.data.credits === 'number' ? r.data.credits : credits;
+                    renderCredits();
+                    output.innerText = cleanText;
+                    document.getElementById('copyBtn').classList.remove('hidden');
+                    saveToHistory(name, cleanText);
+                } else {
+                    throw new Error(r.data.message || 'Gagal menerima respons.');
+                }
             } catch (error) {
-                console.error("Gemini API Error:", error);
-                const fallbackScript = `🔥 HOOK: Korang ada masalah nak cari produk yang berkualiti? Tahan jap, tengok video ni sampai habis!
-
-📦 ISI: Kenalkan ${name}! Penyelesaian terbaik sebab ia ${benefit}. Rekod penggunaan terbaik khas untuk ${audience}. Memang berbaloi dan jimat masa!
-
-👉 CTA: Jangan tunggu lagi, dapatkan ${name} sekarang sebelum stok licin! Tekan beg kuning atau pautan bio di bawah!`;
-
-                output.innerText = fallbackScript;
-                document.getElementById('copyBtn').classList.remove('hidden');
-                saveToHistory(name, fallbackScript);
-
-                showToast("Mod demo: skrip templat (AI belum disambung)");
+                console.error(error);
+                output.innerHTML = PLACEHOLDER_HTML;
+                showModal('Ada Masalah', 'Skrip gagal dijana. Kredit anda tidak ditolak. Sila cuba lagi sebentar lagi.');
             } finally {
                 generateBtn.disabled = false;
                 generateBtn.innerHTML = `⚡ <span>Jana Skrip (Guna 1 Kredit)</span>`;
@@ -326,7 +360,6 @@ PENTING: Jangan guna simbol Markdown (#, *, **, ---). Tulis teks biasa sahaja de
                 script: scriptText,
                 time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
             });
-
             renderHistory();
         }
 
@@ -371,21 +404,12 @@ PENTING: Jangan guna simbol Markdown (#, *, **, ---). Tulis teks biasa sahaja de
             }
         }
 
-        function showModal(title, message, iconType = 'amber', showWhatsApp = false) {
+        /* ===== Modal makluman ===== */
+        function showModal(title, message) {
             const modalOverlay = document.getElementById('modalOverlay');
             const modalBox = document.getElementById('modalBox');
-            const modalTitle = document.getElementById('modalTitle');
-            const modalMessage = document.getElementById('modalMessage');
-            const modalActionBtn = document.getElementById('modalActionBtn');
-
-            modalTitle.innerText = title;
-            modalMessage.innerText = message;
-
-            if (showWhatsApp) {
-                modalActionBtn.classList.remove('hidden');
-            } else {
-                modalActionBtn.classList.add('hidden');
-            }
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalMessage').innerText = message;
 
             modalOverlay.classList.remove('hidden');
             setTimeout(() => {
@@ -397,32 +421,104 @@ PENTING: Jangan guna simbol Markdown (#, *, **, ---). Tulis teks biasa sahaja de
         function closeModal() {
             const modalOverlay = document.getElementById('modalOverlay');
             const modalBox = document.getElementById('modalBox');
-
             modalBox.classList.remove('scale-100', 'opacity-100');
             modalBox.classList.add('scale-95', 'opacity-0');
-            setTimeout(() => {
-                modalOverlay.classList.add('hidden');
-            }, 200);
+            setTimeout(() => { modalOverlay.classList.add('hidden'); }, 200);
+        }
+
+        /* ===== Modal tambah kredit ===== */
+        function renderPackages() {
+            const list = document.getElementById('packageList');
+            list.innerHTML = '';
+            PACKAGES.forEach((p, i) => {
+                const per = (p.price / p.credits).toFixed(2);
+                const btn = document.createElement('button');
+                btn.className = 'w-full text-left p-3 border border-slate-200 hover:border-blue-400 hover:bg-blue-50 rounded-xl transition flex justify-between items-center gap-2';
+                btn.onclick = function () { buyPackage(i); };
+                btn.innerHTML = `
+                    <div>
+                        <div class="text-sm font-bold text-slate-800">${escapeHtml(p.name)} ${p.tag ? '<span class="ml-1 text-[10px] bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-md font-semibold">' + escapeHtml(p.tag) + '</span>' : ''}</div>
+                        <div class="text-xs text-slate-500">${p.credits} skrip &middot; RM${per}/skrip</div>
+                    </div>
+                    <div class="text-base font-bold text-blue-600 shrink-0">RM${p.price}</div>
+                `;
+                list.appendChild(btn);
+            });
         }
 
         function openTopupModal() {
-            showModal(
-                'Top-up Kredit Skrip', 
-                'Dapatkan pakej kredit tambahan untuk menjana lebih banyak skrip tanpa had. Hubungi kami menerusi WhatsApp.', 
-                'emerald', 
-                true
-            );
+            renderPackages();
+            renderCredits();
+            document.getElementById('codeMsg').classList.add('hidden');
+            document.getElementById('topupOverlay').style.display = 'flex';
         }
 
-        function modalAction() {
-            window.open('https://wa.me/601131236469?text=Hai,%20saya%20nak%20topup%20kredit%20AI%20Skrip%20Generator', '_blank');
-            closeModal();
+        function closeTopupModal() {
+            document.getElementById('topupOverlay').style.display = 'none';
+        }
+
+        function buyPackage(i) {
+            const p = PACKAGES[i];
+            if (p.payUrl) {
+                window.open(p.payUrl, '_blank');
+                showToast('Selepas bayar, WhatsApp resit untuk dapatkan kod.');
+                return;
+            }
+            const text = `Hai, saya nak beli pakej ${p.name} (${p.credits} skrip) RM${p.price} untuk AI Skrip Generator.`;
+            window.open('https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(text), '_blank');
+        }
+
+        async function redeemCode() {
+            const input = document.getElementById('codeInput');
+            const msg = document.getElementById('codeMsg');
+            const btn = document.getElementById('redeemBtn');
+            const code = input.value.trim().toUpperCase();
+
+            msg.classList.remove('hidden', 'text-red-600', 'text-emerald-600', 'text-slate-500');
+
+            if (!code) {
+                msg.classList.add('text-red-600');
+                msg.innerText = 'Sila masukkan kod anda.';
+                return;
+            }
+
+            btn.disabled = true;
+            msg.classList.add('text-slate-500');
+            msg.innerText = 'Menyemak kod...';
+
+            try {
+                const r = await callApi('/balance', { deviceId: deviceId, code: code });
+                msg.classList.remove('text-slate-500');
+                if (r.data.error === 'INVALID_CODE') {
+                    msg.classList.add('text-red-600');
+                    msg.innerText = 'Kod tidak sah. Semak semula ejaan kod anda.';
+                } else if (typeof r.data.credits === 'number') {
+                    accessCode = code;
+                    lsSet('skrip_code', code);
+                    credits = r.data.credits;
+                    renderCredits();
+                    input.value = '';
+                    msg.classList.add('text-emerald-600');
+                    msg.innerText = 'Kod diterima! Baki anda: ' + credits + ' kredit.';
+                    showToast('Kod diterima! Baki: ' + credits + ' kredit');
+                    setTimeout(closeTopupModal, 1200);
+                } else {
+                    msg.classList.add('text-red-600');
+                    msg.innerText = 'Tidak dapat menyemak kod. Cuba lagi.';
+                }
+            } catch (e) {
+                msg.classList.remove('text-slate-500');
+                msg.classList.add('text-red-600');
+                msg.innerText = 'Masalah sambungan. Cuba lagi.';
+            } finally {
+                btn.disabled = false;
+            }
         }
 
         function showToast(msg) {
             const toast = document.getElementById('toast');
             document.getElementById('toastMsg').innerText = msg;
-            
+
             toast.classList.remove('translate-y-20', 'opacity-0');
             toast.classList.add('translate-y-0', 'opacity-100');
 
@@ -431,6 +527,8 @@ PENTING: Jangan guna simbol Markdown (#, *, **, ---). Tulis teks biasa sahaja de
                 toast.classList.add('translate-y-20', 'opacity-0');
             }, 3000);
         }
+
+        refreshBalance();
     </script>
 </body>
 </html>
