@@ -31,6 +31,13 @@
             background: #94a3b8;
         }
     </style>
+    <meta name="theme-color" content="#2563eb">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="AI Skrip">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
 </head>
 <body class="bg-slate-900 text-slate-800 min-h-screen flex items-center justify-center p-3 sm:p-6 relative overflow-x-hidden">
 
@@ -136,6 +143,11 @@
                 </span>
             </div>
         </div>
+
+        <!-- Butang pasang app -->
+        <button id="installBtn" onclick="installApp()" class="hidden mt-4 w-full text-sm font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-xl py-2.5 transition">
+            📲 Pasang App di Skrin Utama
+        </button>
 
         <!-- History Toggle -->
         <div class="mt-5 border-t border-slate-200 pt-3">
@@ -529,6 +541,33 @@
         }
 
         refreshBalance();
+
+        /* ===== Pasang ke skrin utama (PWA) ===== */
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('sw.js').catch(function () {});
+            });
+        }
+
+        var deferredInstall = null;
+        window.addEventListener('beforeinstallprompt', function (e) {
+            e.preventDefault();
+            deferredInstall = e;
+            var b = document.getElementById('installBtn');
+            if (b) b.classList.remove('hidden');
+        });
+        window.addEventListener('appinstalled', function () {
+            deferredInstall = null;
+            var b = document.getElementById('installBtn');
+            if (b) b.classList.add('hidden');
+            showToast('App dipasang di skrin utama!');
+        });
+        function installApp() {
+            if (!deferredInstall) return;
+            deferredInstall.prompt();
+            deferredInstall.userChoice.finally(function () { deferredInstall = null; });
+            document.getElementById('installBtn').classList.add('hidden');
+        }
     </script>
 </body>
 </html>
