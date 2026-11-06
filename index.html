@@ -156,18 +156,18 @@
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Jenis Video</label>
                     <select id="vType" class="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none text-sm bg-white">
-                        <option value="Jualan">Jualan</option>
-                        <option value="Tutorial / Cara Buat">Tutorial / Cara Buat</option>
-                        <option value="Cerita / Testimoni">Cerita / Testimoni</option>
-                        <option value="Edukasi / Tips">Edukasi / Tips</option>
+                        <option value="JUAL">Jualan</option>
+                        <option value="TUTO">Tutorial / Cara Buat</option>
+                        <option value="CERITA">Cerita / Testimoni</option>
+                        <option value="EDU">Edukasi / Tips</option>
                     </select>
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Platform</label>
                     <select id="vPlatform" class="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none text-sm bg-white">
-                        <option value="TikTok">TikTok</option>
-                        <option value="Reels Instagram/Facebook">Reels (IG/FB)</option>
-                        <option value="YouTube Shorts">YouTube Shorts</option>
+                        <option value="TT">TikTok</option>
+                        <option value="RL">Reels (IG/FB)</option>
+                        <option value="SH">YouTube Shorts</option>
                     </select>
                 </div>
                 <div>
@@ -181,10 +181,10 @@
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Gaya</label>
                     <select id="vTone" class="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none text-sm bg-white">
-                        <option value="Santai & Mesra">Santai & Mesra</option>
-                        <option value="Dramatik & Storytelling">Dramatik & Storytelling</option>
-                        <option value="Profesional & Elegan">Profesional & Elegan</option>
-                        <option value="Tegas & Promosi Terus">Tegas & Promosi Terus</option>
+                        <option value="SANTAI">Santai & Mesra</option>
+                        <option value="DRAMA">Dramatik & Storytelling</option>
+                        <option value="PRO">Profesional & Elegan</option>
+                        <option value="TEGAS">Tegas & Promosi Terus</option>
                     </select>
                 </div>
             </div>
@@ -444,13 +444,10 @@
             tabVideo.classList.add(...(isVideo ? on : off));
         }
 
+        // Penanda padat (Worker hanya terima 60 aksara untuk medan nada).
+        // Contoh: VID|30|TT|JUAL|SANTAI. Arahan penuh disusun oleh Worker.
         function buildVideoPrompt(type, platform, duration, tone) {
-            return 'SKRIP VIDEO PENDEK ' + duration + ' saat untuk ' + platform + '. Jenis video: ' + type + '. Gaya: ' + tone + '. ' +
-                'FORMAT WAJIB (jangan guna simbol markdown): baris pertama "HOOK: ..." (ayat pembuka 0-3 saat). ' +
-                'Kemudian setiap adegan satu baris dengan format tepat: MASA | VISUAL | SUARA | TEKS SKRIN ' +
-                '(contoh: 0-3s | Close-up kuih baru keluar kukus | Jiran tanya, mana beli? | Kuih Homemade). ' +
-                'Pecahkan ikut tempoh ' + duration + ' saat (4-8 adegan). Akhiri dengan baris "CTA: ..." dan baris "KAPSYEN: ..." (kapsyen + 5 hashtag). ' +
-                'Bahasa Malaysia santai.';
+            return 'VID|' + duration + '|' + platform + '|' + type + '|' + tone;
         }
 
         function renderVideoOutput(text) {
@@ -573,12 +570,12 @@
                     document.getElementById('copyBtn').classList.remove('hidden');
                     saveToHistory('🎬 ' + topic, cleanText, 'video');
                 } else {
-                    throw new Error(r.data.message || 'Gagal menerima respons.');
+                    throw new Error('HTTP ' + r.status + ' ' + (r.data.error || '') + ' ' + (r.data.detail || r.data.message || ''));
                 }
             } catch (error) {
                 console.error(error);
                 output.innerHTML = PLACEHOLDER_HTML;
-                showModal('Ada Masalah', 'Skrip video gagal dijana. Kredit anda tidak ditolak. Sila cuba lagi sebentar lagi.');
+                showModal('Ada Masalah', 'Skrip video gagal dijana. Sebab: ' + String((error && error.message) || error).slice(0, 300));
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = `🎬 <span>Jana Skrip Video (Guna 1 Kredit)</span>`;
