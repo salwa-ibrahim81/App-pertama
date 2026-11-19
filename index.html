@@ -406,7 +406,7 @@
                     showToast('Kod tidak sah. Sila masukkan semula.');
                     return;
                 }
-
+if (!r.data.text) { output.innerHTML = PLACEHOLDER_HTML; showModal('Ada Masalah', 'Sebab: HTTP ' + r.status + ' ' + (r.data.error || '') + ' ' + (r.data.detail || r.data.message || '')); return; }
                 if (r.data.text) {
                     const cleanText = String(r.data.text)
                         .replace(/\*\*|\*|#{1,6}\s?|^---+$/gm, '')
